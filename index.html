@@ -9,8 +9,13 @@
 
     <link rel="stylesheet" href="themes/warsawjs/styles/ribbon-theme.css">
     <link rel="stylesheet" href="themes/warsawjs/styles/warsawjs-theme.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" >
+
 </head>
 <body class="list">
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
     <header class="caption">
         <h1>Geocoding in applications</h1>
         <p></p>
@@ -23,7 +28,7 @@
             </div>
             <div class="content">
                 <h2>Geocoding in applications</h2>
-                <p>Author Name <a href="http://twitter.com/michalrogala">@michalrogala</a>
+                <p>Michał Rogala <a href="http://twitter.com/michalrogala">@michalrogala</a>
             </div>
         </div>
     </section>
@@ -32,32 +37,377 @@
         <div>
             <h2>What is geocoding?</h2>
 
-            <p>Converting text description into GPS coordinates
-            </p>
+            <p style="text-align:center">Converting text description into GPS coordinates
+                <br>
+
+            <img src="./gfx/geocoding1.png" style="width:70%;" alt="">
+        </p>
+
         </div>
     </section>
 
+
+     <section class="slide">
+        <div>
+            <h2>What is geocoding?</h2>
+
+            <p style="text-align:center">Converting text description into GPS coordinates
+                <br>
+
+            <img src="./gfx/geocoding2.png" style="width:70%;" alt="">
+        </p>
+
+        </div>
+    </section>
+
+
     <section class="slide">
         <div>
-            <h2>All Kind of Lists</h2>
+            <h2>Why use it?</h2>
             <ol>
-                <li>Simple lists are marked with bullets</li>
-                <li>Ordered lists begin with a number</li>
-                <li>You can even nest lists one inside another
+                <li>Show location on map</li>
+                <li>Spatial analysis
                     <ul>
-                        <li>Or mix their types</li>
-                        <li>But do not go too far</li>
-                        <li>Otherwise audience will be bored</li>
+                        <li>Route planning</li>
+                        <li>Delivery coverage</li>
+                        <li>Geomarketing, insurance, big data, etc</li>
+
                     </ul>
                 </li>
-                <li>Look, seven rows exactly!</li>
+
             </ol>
         </div>
     </section>
 
+
     <section class="slide">
         <div>
-            <h2>JavaScript Samples</h2>
+            <h2>Reverse geocoding</h2>
+
+            <p style="text-align:center">Converting GPS location into human readable text
+                <br>
+
+            <img src="./gfx/geocoding3.png" style="width:70%;" alt="">
+        </p>
+
+
+        </div>
+    </section>
+
+
+    <section class="slide">
+        <div>
+            <h2>Geocoding services</h2>
+            <ol>
+                <li>Google Maps</li>
+                <li>HERE (Nokia) Maps</li>
+                <li>OpenStreetMap based:
+                    <ul>
+                        <li>Nominatim - MapQuest, osm.org</li>
+                        <li>navidata.pl - geocoding in Poland</li>
+                    </ul>
+                </li>
+
+            </ol>
+        </div>
+    </section>
+
+
+     <section class="slide">
+        <div>
+            <h2>API calls - Nominatim</h2>
+
+            <pre>
+            <mark>http://nominatim.openstreetmap.org/search?q=warszawa,jerozolimskie 91&format=json</mark>
+            <br>
+
+
+                [{<br>
+                "lat":"52.226866",<br>
+                "lon":"20.9991864510345"<br>
+                "display_name":"91, Aleje Jerozolimskie, Kolonia Staszica, Ochota, Warszawa, województwo mazowieckie, 02-006, Polska"<br>
+                }]
+
+
+
+            </pre>
+
+
+        </div>
+
+         </section>
+
+       <section class="slide">
+        <div>
+            <h2>API calls - NaviData</h2>
+
+            <pre>
+            <mark>http://api.navidata.pl/geocode?q=warszawa,jerozolimskie 91</mark>
+            <br>
+
+
+                [{<br>
+
+                 "lat": 52.2268660010955, <br>
+                 "lon": 20.9991863955474,<br>
+                 "description": "Aleje Jerozolimskie 91, Warszawa, woj. mazowieckie"<br>
+
+                }]
+
+
+            </pre>
+
+
+        </div>
+
+
+    </section>
+
+
+      <section class="slide">
+        <div>
+            <h2>LeafletJS - leafletjs.com</h2>
+
+            <img src="./gfx/leaflet2.png" align="center" style="width:70%;" alt="">
+
+        </div>
+    </section>
+
+
+     <section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+<code style="white-space: pre-wrap;">&lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" &gt
+
+&lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
+            </code>
+            </pre>
+
+
+        </div>
+    </section>
+
+     <section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+<code style="white-space: pre-wrap;">&lt;div align="center" <mark>id="map"</mark> style="width:50%" &gt;&lt;/div&gt;
+
+
+            </code>
+            </pre>
+
+
+        </div>
+    </section>
+
+
+     <section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+<code style="white-space: pre-wrap;">var map = L.map('map').setView([52.2321, 21.0127], <mark>14</mark>);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18
+}).addTo(map);
+
+var marker = L.marker([52.2321, 21.0127]).addTo(map);
+            </code>
+            </pre>
+
+
+        </div>
+    </section>
+
+     <section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+
+
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+ <div id="map" style="width:100%;height:100%"></div>
+
+<script>
+
+ var map = L.map('map').setView([52.2321, 21.0127], 14);
+
+ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map);
+
+var marker = L.marker([52.2321, 21.0127]);
+marker.addTo(map);
+
+</script>
+
+        </div>
+    </section>
+
+
+
+<section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+
+<code>var circle = L.circle([52.2321, 21.0127], 1000, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.3
+}).addTo(map);
+
+            </code>
+            </pre>
+
+
+        </div>
+    </section>
+
+
+
+<section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+
+            <input type="text" width="70" id="adres"><input type="button" value="szukaj" style="border: none; background-color:#5CB85C; color: #ffffff; border-radius: 5px;">
+            <div id="map2" style="width:100%;height:100%"></div>
+
+<script>
+
+ var map2 = L.map('map2').setView([52.2321, 21.0127], 14);
+
+ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map2);
+
+
+var circle = L.circle([52.2321, 21.0127], 1000, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.3
+}).addTo(map2);
+
+var marker = L.marker([52.2321, 21.0127]);
+marker.addTo(map2)
+
+
+</script>
+
+
+
+        </div>
+    </section>
+
+
+
+
+     <section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+    <code><mark>function szukaj() {</mark></code>
+    <code>adres = document.getElementById("adres").value;</code>
+    <code>  if ( adres.length == 0 ) { return ;}</code>
+    <code>  $.getJSON("http://api.navidata.pl/geocode",</code>
+    <code> { q :  adres  }, szukaj_callback);</code>
+    <code> }</code>
+            </pre>
+
+
+        </div>
+    </section>
+
+<section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+            <pre>
+    <code><mark>function szukaj_callback(dane) {</mark></code>
+    <code></code>
+    <code>marker.setLatLng([dane[0].lat, dane[0].lon]) </code>
+    <code> </code>
+            </pre>
+
+
+        </div>
+    </section>
+
+
+<section class="slide">
+        <div>
+            <h2>LeafletJS - API</h2>
+
+
+            <input type="text" width="70" id="adres3"><input type="button" value="szukaj" style="border: none; background-color:#5CB85C; color: #ffffff; border-radius: 5px;" onclick="szukaj()">
+            <div id="map3" style="width:100%;height:100%"></div>
+
+<script>
+
+
+
+ var map3 = L.map('map3').setView([52.2321, 21.0127], 14);
+
+ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map3);
+
+
+var circle = L.circle([52.2321, 21.0127], 1000, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.3
+}).addTo(map3);
+
+var marker3 = L.marker([52.2321, 21.0127]);
+marker3.addTo(map3);
+
+function szukaj() {
+ adres3 = document.getElementById("adres3").value;
+     if ( adres3.length == 0 ) { return ;}
+
+     $.getJSON("http://api.navidata.pl/geocode", { q :  adres3 }, szukaj_callback);
+
+}
+
+
+function szukaj_callback(dane) {
+
+    pozycja = L.latLng([dane[0].lat, dane[0].lon]);
+    pizzeria = L.latLng([52.2321, 21.0127]);
+
+    marker3.setLatLng(pozycja);
+    map3.setView(pozycja, 14);
+    odleglosc = pozycja.distanceTo(pizzeria);
+    marker3.bindPopup('Odleglość:' + Math.round(odleglosc) + 'm');
+    marker3.togglePopup();
+}
+
+
+
+</script>
+
+
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <section class="slide">
+        <div>
+            <h2>Leaflet JS</h2>
             <pre>
                 <code><mark class="comment">// Crockford style IIFE</mark></code>
                 <code>(function () {</code>
