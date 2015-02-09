@@ -210,11 +210,11 @@
             <h2>LeafletJS - API</h2>
 
             <pre>
-<code style="white-space: pre-wrap;">var map = L.map('map').setView([52.2321, 21.0127], <mark>14</mark>);
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18
-}).addTo(map);
+<code style="white-space: pre-wrap;">var map = L.map('map').setView([52.2321, 21.0127], <mark>14</mark>);</code>
+<code>L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    {maxZoom: 18}).addTo(map);</code>
 
-var marker = L.marker([52.2321, 21.0127]).addTo(map);
+<code>var marker = L.marker([52.2321, 21.0127]).addTo(map);
             </code>
             </pre>
 
@@ -313,7 +313,7 @@ marker.addTo(map2)
             <h2>LeafletJS - API</h2>
 
             <pre>
-    <code><mark>function szukaj() {</mark></code>
+    <code><mark>function search() {</mark></code>
     <code>adres = document.getElementById("adres").value;</code>
     <code>  if ( adres.length == 0 ) { return ;}</code>
     <code>  $.getJSON("http://api.navidata.pl/geocode",</code>
@@ -330,10 +330,16 @@ marker.addTo(map2)
             <h2>LeafletJS - API</h2>
 
             <pre>
-    <code><mark>function szukaj_callback(dane) {</mark></code>
-    <code></code>
-    <code>marker.setLatLng([dane[0].lat, dane[0].lon]) </code>
-    <code> </code>
+    <code><mark>function search_callback(data) {</mark></code>
+    <code>  position = L.latLng([dane[0].lat, dane[0].lon]);</code>
+    <code>  company = L.latLng([52.2321, 21.0127]);</code>
+    <code>  marker.setLatLng(position);</code>
+    <code>  map.setView(position, 14);</code>
+    <code>  distance = position.distanceTo(company);</code>
+    <code>  marker.bindPopup('Distance:' + Math.round(distance) + 'm');</code>
+    <code>  marker.togglePopup();</code>
+                <code>}</code>
+
             </pre>
 
 
@@ -386,7 +392,7 @@ function szukaj_callback(dane) {
     marker3.setLatLng(pozycja);
     map3.setView(pozycja, 14);
     odleglosc = pozycja.distanceTo(pizzeria);
-    marker3.bindPopup('Odleglość:' + Math.round(odleglosc) + 'm');
+    marker3.bindPopup('Distance:' + Math.round(odleglosc) + 'm');
     marker3.togglePopup();
 }
 
@@ -399,76 +405,13 @@ function szukaj_callback(dane) {
         </div>
     </section>
 
+  <section class="slide">
+        <div><p>
+           <h2>Thank you for your attention :) </h2>
+            </p>
+            </div>
 
-
-
-
-
-
-    <section class="slide">
-        <div>
-            <h2>Leaflet JS</h2>
-            <pre>
-                <code><mark class="comment">// Crockford style IIFE</mark></code>
-                <code>(function () {</code>
-                <code>  var <mark>someVar</mark> = 'value';</code>
-                <code>  console.<mark class="important">log</mark>(someVar);</code>
-                <code>}());</code>
-            </pre>
-        </div>
-    </section>
-    <section class="slide">
-        <div>
-            <h2>Even Tables</h2>
-            <table>
-                <tr>
-                    <th scope="col">Locavore</th>
-                    <th>Umami</th>
-                    <th>Helvetica</th>
-                    <th>Vegan</th>
-                </tr>
-                <tr>
-                    <th scope="row">Fingerstache</th>
-                    <td>Kale</td>
-                    <td>Chips</td>
-                    <td>Keytar</td>
-                </tr>
-                <tr>
-                    <th scope="row">Sriracha</th>
-                    <td>Gluten-free</td>
-                    <td>Ennui</td>
-                    <td>Keffiyeh</td>
-                </tr>
-                <tr>
-                    <th scope="row">Thundercats</th>
-                    <td>Jean</td>
-                    <td>Shorts</td>
-                    <td>Biodiesel</td>
-                </tr>
-                <tr>
-                    <th scope="row">Terry</th>
-                    <td>Richardson</td>
-                    <td>Swag</td>
-                    <td>Blog</td>
-                </tr>
-            </table>
-            <p>It’s good to have information organized.</p>
-        </div>
-    </section>
-
-    <section class="slide cover">
-        <div>
-            <img src="./themes/warsawjs/pictures/bigphoto.jpg" alt="">
-        </div>
-    </section>
-
-    <section class="slide shout">
-        <div>
-            <h2>See you next month at WarsawJS</h2>
-        </div>
-    </section>
-
-    <p class="badge"><a href="https://github.com/warsawjs/presentation-template">Fork me on Github</a></p>
+      </section>
 
     <div class="progress">
         <div></div>
